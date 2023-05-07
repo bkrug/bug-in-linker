@@ -2,7 +2,7 @@
 *
        REF  NUM1,NUM2,NUM3
        REF  STACK,HEXTXT
-       REF  VDPADR,VDPWRT
+       REF  VMBW
 
 *
 * Uncomment this line as a work-around for the bug
@@ -13,22 +13,21 @@ NUMBRS DATA NUM1,NUM2,NUM3
 NUMBRE
 
 START  LI   R12,STACK
-       LI   R2,NUMBRS
+       LI   R4,NUMBRS
        LI   R3,>22
        LIMI 0
 * Convert number to text      
-L1     MOV  *R2+,R0
+L1     MOV  *R4+,R0
        LI   R1,HEXTXT
        BL   @MAKEHX
 * Print text to screen
        MOV  R3,R0
-       BL   @VDPADR
-       LI   R0,HEXTXT
-       LI   R1,4
-       BL   @VDPWRT       
+       LI   R1,HEXTXT
+       LI   R2,4
+       BLWP @VMBW
        AI   R3,>20
 * Check if we reached end of data
-       CI   R2,NUMBRE
+       CI   R4,NUMBRE
        JL   L1
 *
 JMP    JMP  JMP
@@ -68,6 +67,7 @@ MAKEP1 DECT R12
        MOV  *R12+,R4
        MOV  *R12+,R11
        RT
+
 * Convert Byte to ASCII code
 CONVB  CI   R4,>0A00
        JHE  CNVB2

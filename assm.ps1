@@ -19,7 +19,6 @@ ForEach($file in $fileList) {
 # Link object files
 xas99.py -l `
     DISPNUM.obj.temp `
-    VDP.obj.temp `
     CONST.obj.temp `
     VAR.obj.temp `
     -o LINKED.obj
